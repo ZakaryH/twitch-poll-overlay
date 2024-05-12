@@ -18,7 +18,7 @@ console.log(settings);
 const job: Job = new Job(settings.timeout, settings.requiredPings);
 const chat: Chat = new TwitchChat(settings.channel);
 const chart: Chart = settings.buildChart();
-const storage: ReactionStorage = new ReactionStorage(chat, job);
+const storage: ReactionStorage = new ReactionStorage(chat, job, false);
 const animation: CanvasAnimation = new CanvasAnimation(settings.elementId);
 
 // clear bar after faded out
