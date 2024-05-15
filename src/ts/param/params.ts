@@ -3,6 +3,11 @@ import { Bar, BarProperties } from "../charts/bar";
 import { Pie, PieProperties } from "../charts/pie";
 import { reactions, updateReactions } from "../keywords";
 
+const duplicateSettingsMap = {
+  "true": true,
+  "false": false
+}
+
 export class Settings implements ChartProperties, PieProperties, BarProperties {
   public channel: string = null;
   public timeout: number = 10;
@@ -47,6 +52,8 @@ export class Settings implements ChartProperties, PieProperties, BarProperties {
 
   // reactions
   public reactionsJson: string = "";
+  public allowDuplicates: boolean = false;
+
 
   constructor() {
     const params: URLSearchParams = new URLSearchParams(window.location.search);
@@ -54,7 +61,11 @@ export class Settings implements ChartProperties, PieProperties, BarProperties {
     console.log("Loading settings ...");
     params.forEach((value: string, key: string, _) => {
       try {
-        this[key] = value;
+        if(key == "allowDuplicates") {
+          this[key] = duplicateSettingsMap[value]
+        } else {
+          this[key] = value;
+        }
       } catch (ex) {
         throw new Error(ex);
       }
